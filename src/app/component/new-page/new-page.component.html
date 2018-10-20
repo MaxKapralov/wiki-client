@@ -1,0 +1,27 @@
+<mat-card class="left-sidenav">
+  <mat-card-title>
+    <mat-card-title>Avatar + Name</mat-card-title>
+  </mat-card-title>
+  <mat-card-content>
+    Some buttons here =).
+  </mat-card-content>
+</mat-card>
+<div>
+  <div class="container">
+    <h3>Create New Wiki Page</h3>
+    <mat-form-field class="container-item" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput autosize [minRows]="1">
+    </mat-form-field>
+    <mat-form-field class="container-item" appearance="outline">
+      <mat-label>Content</mat-label>
+      <textarea matInput autosize [minRows]="8"></textarea>
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary">Create</button>
+      <button mat-raised-button color="warn">Reset</button>
+    </div>
+  </div>
+</div>
+<mat-card class="right-sidenav">
+</mat-card>
