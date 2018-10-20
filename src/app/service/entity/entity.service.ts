@@ -16,7 +16,7 @@ export abstract class EntityService<T extends Entity> {
   };
 
   protected constructor(private http: HttpClient, private rel: string) {
-    this.url = `${environment.apiUrl}/ ${rel}`;
+    this.url = `${environment.apiUrl}/${rel}`;
   }
 
   static httpParams(params): { [p: string]: string } {
@@ -36,7 +36,7 @@ export abstract class EntityService<T extends Entity> {
     return this.http.get<Resource<T>>(url);
   }
 
-  getAll(params): Observable<Resources<T>> {
+  getAll(params = {}): Observable<Resources<T>> {
     return this.http.get<Resources<T>>(this.url, {
       params: EntityService.httpParams(params)
     });

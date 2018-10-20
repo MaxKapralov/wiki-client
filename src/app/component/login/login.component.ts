@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authService.attemptAuthentication(this.loginForm.get('username').value, this.loginForm.get('password').value)
     .subscribe(() => {
       if (this.authService.isAuthenticated()) {
-        this.router.navigate(['friends']);
+        this.router.navigate(['new-page']);
       }
     });
   }

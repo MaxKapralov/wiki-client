@@ -6,16 +6,24 @@
     Some buttons here =).
   </mat-card-content>
 </mat-card>
-<div>
+<div [formGroup]="newPage">
   <div class="container">
     <h3>Create New Wiki Page</h3>
     <mat-form-field class="container-item" appearance="outline">
       <mat-label>Title</mat-label>
-      <input matInput autosize [minRows]="1">
+      <textarea matInput autosize [minRows]="1" formControlName="title"></textarea>
+    </mat-form-field>
+    <mat-form-field class="container-item" appearance="outline">
+      <mat-label>Allowed To Read</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let user of allUsers" value="user">
+          {{user.fullName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field class="container-item" appearance="outline">
       <mat-label>Content</mat-label>
-      <textarea matInput autosize [minRows]="8"></textarea>
+      <textarea matInput autosize [minRows]="8" formControlName="content"></textarea>
     </mat-form-field>
     <div>
       <button mat-raised-button color="primary">Create</button>

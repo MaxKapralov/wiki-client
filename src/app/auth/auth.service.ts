@@ -5,9 +5,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import {environment} from '../environment';
-
-
+import { environment } from '../environment';
 export const AUTH_TOKEN_HEADER = 'Authorization';
 export const AUTH_TOKEN_PREFIX = 'Bearer';
 

@@ -9,14 +9,17 @@ import { environment } from './environment';
 import { TokenStorageService } from './auth/token-storage.service';
 import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewPageComponent } from './component/new-page/new-page.component';
+import { LoginRedirectService } from './auth/login-redirect.service';
+import { AllowedUsersComponent } from './component/allowed-users/allowed-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NewPageComponent
+    NewPageComponent,
+    AllowedUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +36,15 @@ import { NewPageComponent } from './component/new-page/new-page.component';
       }
     }),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+      ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginRedirectService,
+      multi: true
+    }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

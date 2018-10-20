@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatCardModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AutosizeModule} from 'ngx-autosize';
 
@@ -11,14 +11,16 @@ import {AutosizeModule} from 'ngx-autosize';
     MatButtonModule,
     MatCardModule,
     BrowserAnimationsModule,
-    AutosizeModule
+    AutosizeModule,
+    MatSelectModule
   ],
   exports: [
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     BrowserAnimationsModule,
-    AutosizeModule
+    AutosizeModule,
+    MatSelectModule
   ]
 })
 export class AppMaterialModule { }
