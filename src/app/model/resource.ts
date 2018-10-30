@@ -11,6 +11,6 @@ export type Resource<T> = T & ResourceSupport;
 
 export interface Resources<T> extends ResourceSupport {
   _embedded: {
-    [x: string]: Resource<T>
+    [x: string]: Resource<T>[];
   };
 }

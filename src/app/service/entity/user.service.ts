@@ -11,4 +11,12 @@ export class UserService extends EntityService<User> {
   constructor(http: HttpClient) {
     super(http, 'users');
   }
+
+  getByUsername(username: string) {
+    return this.http.get(`${this.url}/findByUsername`, {
+      params: {
+        username: username
+      }
+    });
+  }
 }

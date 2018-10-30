@@ -15,7 +15,7 @@ export abstract class EntityService<T extends Entity> {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  protected constructor(private http: HttpClient, private rel: string) {
+  protected constructor(protected http: HttpClient, private rel: string) {
     this.url = `${environment.apiUrl}/${rel}`;
   }
 
@@ -36,8 +36,8 @@ export abstract class EntityService<T extends Entity> {
     return this.http.get<Resource<T>>(url);
   }
 
-  getAll(params = {}): Observable<Resources<T>> {
-    return this.http.get<Resources<T>>(this.url, {
+  getAll(params = {}): Observable<T[]> {
+    return this.http.get<T[]>(this.url, {
       params: EntityService.httpParams(params)
     });
   }

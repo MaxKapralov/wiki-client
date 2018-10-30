@@ -12,14 +12,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewPageComponent } from './component/new-page/new-page.component';
 import { LoginRedirectService } from './auth/login-redirect.service';
-import { AllowedUsersComponent } from './component/allowed-users/allowed-users.component';
+import { SafeHtml } from './safe-html';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NewPageComponent,
-    AllowedUsersComponent
+    SafeHtml,
   ],
   imports: [
     BrowserModule,
