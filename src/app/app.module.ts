@@ -13,6 +13,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewPageComponent } from './component/new-page/new-page.component';
 import { LoginRedirectService } from './auth/login-redirect.service';
 import { SafeHtml } from './safe-html';
+import { MyArticlesComponent } from './component/my-articles/my-articles.component';
+import { LeftSidenavComponent } from './component/left-sidenav/left-sidenav.component';
+import { ArticleComponent } from './component/article/article.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { SafeHtml } from './safe-html';
     LoginComponent,
     NewPageComponent,
     SafeHtml,
+    MyArticlesComponent,
+    LeftSidenavComponent,
+    ArticleComponent,
   ],
   imports: [
     BrowserModule,

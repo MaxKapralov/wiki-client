@@ -52,11 +52,13 @@ export class NewPageComponent extends EntityComponent<Page> implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.getByUsername(this.userStorageService.getUser()).subscribe((data: User) => {
+      this.loggedInUser = data;
+    });
     this.userService.getAll().subscribe(allUsers => {
       this.allUsers = allUsers;
       this.allUsers = this.allUsers.filter(user => user.username !== this.userStorageService.getUser());
     });
-    this.userService.getByUsername(this.userStorageService.getUser()).subscribe((data: User) => this.loggedInUser = data);
   }
 
   add(event: MatChipInputEvent): void {

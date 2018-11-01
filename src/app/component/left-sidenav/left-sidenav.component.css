@@ -1,0 +1,17 @@
+.left-sidenav {
+  height: 100%;
+  width: 10%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+}
+
+.left-buttons {
+  margin-top: 20%;
+}
+
+.buttons-card {
+  margin-top: 30%;
+}

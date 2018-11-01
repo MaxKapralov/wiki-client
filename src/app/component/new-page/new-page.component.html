@@ -1,14 +1,3 @@
-<mat-card class="left-sidenav">
-  <mat-card-title>
-    <mat-card-title *ngIf="loggedInUser">
-      {{loggedInUser.fullName}}
-    </mat-card-title>
-  </mat-card-title>
-  <mat-card-content class="buttons-card">
-    <button mat-raised-button class="left-buttons">Create new article</button>
-    <button mat-raised-button class="left-buttons">My articles</button>
-  </mat-card-content>
-</mat-card>
 <div [formGroup]="newPage">
   <div class="container">
     <h3>Create New Article</h3>
@@ -58,5 +47,3 @@
     </div>
   </div>
 </div>
-<mat-card class="right-sidenav">
-</mat-card>

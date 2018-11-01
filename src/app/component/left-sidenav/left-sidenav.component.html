@@ -1,0 +1,11 @@
+<mat-card class="left-sidenav">
+  <mat-card-title>
+    <mat-card-title *ngIf="loggedInUser">
+      {{loggedInUser.fullName}}
+    </mat-card-title>
+  </mat-card-title>
+  <mat-card-content class="buttons-card">
+    <button mat-raised-button class="left-buttons" (click)="navigate('new-page')">Create new article</button>
+    <button mat-raised-button class="left-buttons" (click)="navigate('my-articles')">My articles</button>
+  </mat-card-content>
+</mat-card>
