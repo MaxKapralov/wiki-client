@@ -1,109 +1,82 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../model/user';
-import { UserService } from '../../service/entity/user.service';
-import { Observable } from 'rxjs';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { map, startWith } from 'rxjs/operators';
 import { UserStorageService } from '../../auth/user-storage.service';
 import { Page } from '../../model/page';
-import { PageService } from '../../service/entity/page.service';
-import { EntityComponent } from '../entity/entity.component';
+import { ActivatedRoute } from '@angular/router';
+import { EditorComponent } from './editor/editor.component';
+import { AllowedToReadChipComponent } from './allowed-to-read-chip/allowed-to-read-chip.component';
+import { PageProxyService } from '../../service/proxy/page-proxy.service';
+import { UserProxyService } from '../../service/proxy/user-proxy.service';
+import { SystemMessageService } from '../../service/system-message.service';
+
 
 @Component({
   selector: 'app-new-page',
   templateUrl: './new-page.component.html',
   styleUrls: ['./new-page.component.css']
 })
-export class NewPageComponent extends EntityComponent<Page> implements OnInit {
+export class NewPageComponent implements OnInit {
 
   newPage: FormGroup;
-  allUsers: User[] = [];
-  filteredUsers: Observable<User[]>;
-  allowedUsers: User[] = [];
+  pageId: number;
+  title = 'Create New Page';
   userCtrl = new FormControl();
-  loggedInUser: User;
-  @ViewChild('auto') matAutoComplete: MatAutocomplete;
-  @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  author: User;
+  @ViewChild('chipComponent') chip: AllowedToReadChipComponent;
+  @ViewChild('editor') editor: EditorComponent;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private userStorageService: UserStorageService,
-              private pageService: PageService) {
-    super(pageService);
+
+  constructor(private formBuilder: FormBuilder, private userProxyService: UserProxyService, private userStorageService: UserStorageService,
+              private pageProxyService: PageProxyService, private route: ActivatedRoute,
+              private systemMessageService: SystemMessageService) {
     this.newPage = formBuilder.group({
       title: [null, Validators.required],
-      content: [null, Validators.required]
     });
-    this.filteredUsers = this.userCtrl.valueChanges.pipe(
-      startWith(null),
-      map((user: User | null) => {
-        return user ? this._filter(user) : this.getAvailableUsers().slice();
-      })
-    );
-  }
-
-  private _filter(user: User): User[] {
-    return this.getAvailableUsers().filter(u => u.username !== user.username);
-  }
-
-  private getAvailableUsers(): User[] {
-    return this.allUsers.filter(user => !this.allowedUsers.includes(user));
   }
 
   ngOnInit() {
-    this.userService.getByUsername(this.userStorageService.getUser()).subscribe((data: User) => {
-      this.loggedInUser = data;
-    });
-    this.userService.getAll().subscribe(allUsers => {
-      this.allUsers = allUsers;
-      this.allUsers = this.allUsers.filter(user => user.username !== this.userStorageService.getUser());
-    });
-  }
-
-  add(event: MatChipInputEvent): void {
-    if (!this.matAutoComplete.isOpen) {
-      const input = event.input;
-      const value = event.value;
-      if ((value || '').trim()) {
-        console.log(value);
-      }
-      if (input) {
-        input.value = '';
-      }
-      this.userCtrl.setValue(null);
+    if (this.route.snapshot.url[0].path === 'edit') {
+      this.pageProxyService.getPageByLink(this.route.snapshot.params['link']).subscribe(page => {
+        this.pageId = page.id;
+        this.chip.allowed = page.allowedToRead;
+        this.newPage.controls['title'].setValue(page.title);
+        this.title = 'Edit Page';
+        this.author = page.author;
+        this.editor.html = page.content;
+      });
+    } else {
+      this.userProxyService.getUser().subscribe((data: User) => {
+        this.author = data;
+      });
     }
-  }
-
-  remove(user: User): void {
-    const index = this.allowedUsers.indexOf(user);
-    if (index >= 0) {
-      this.allowedUsers = this.allowedUsers.filter(us => us.username !== user.username);
-
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.allowedUsers.push(event.option.value);
-    this.userCtrl.setValue(null);
-    this.userInput.nativeElement.value = '';
   }
 
   reset() {
     this.newPage.reset();
     this.userCtrl.reset();
-    this.allowedUsers = [];
+    this.editor.html = '';
+    this.chip.allowed = [];
   }
 
   createPage() {
-    const newPage: Page = {
-      content: this.newPage.get('content').value,
+    if (!this.editor.html) {
+      this.systemMessageService.show('Content is required!');
+      return;
+    }
+    const page: Page = {
+      id: this.pageId,
+      content: this.editor.html,
       title: this.newPage.get('title').value,
-      author: this.loggedInUser,
-      allowedToRead: this.allowedUsers,
+      author: this.author,
+      allowedToRead: this.chip.allowed,
       timestamp: new Date()
     };
-    this.save(newPage);
-    this.newPage.reset();
+    if (this.pageId) {
+      this.pageProxyService.updateEntity(page);
+    } else {
+      this.pageProxyService.addEntity(page);
+    }
+    this.reset();
   }
 }

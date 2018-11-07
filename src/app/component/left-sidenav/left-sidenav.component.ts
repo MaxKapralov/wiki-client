@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../service/entity/user.service';
-import { UserStorageService } from '../../auth/user-storage.service';
 import { User } from '../../model/user';
 
 @Component({
@@ -12,8 +10,7 @@ import { User } from '../../model/user';
 export class LeftSidenavComponent implements OnInit {
 
   @Input() loggedInUser: User;
-  constructor(private userService: UserService,
-              private userStorageService: UserStorageService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }

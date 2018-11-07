@@ -4,10 +4,10 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
-  MatChipsModule,
+  MatChipsModule, MatDialogModule,
   MatIconModule,
   MatInputModule,
-  MatSelectModule
+  MatSelectModule, MatSnackBarModule, MatTooltipModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AutosizeModule} from 'ngx-autosize';
@@ -23,7 +23,11 @@ import {AutosizeModule} from 'ngx-autosize';
     MatSelectModule,
     MatChipsModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     MatInputModule,
@@ -34,7 +38,10 @@ import {AutosizeModule} from 'ngx-autosize';
     MatSelectModule,
     MatChipsModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSelectModule
   ]
 })
 export class AppMaterialModule { }

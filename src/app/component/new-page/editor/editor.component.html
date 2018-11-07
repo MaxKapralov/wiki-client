@@ -1,0 +1,39 @@
+<div [formGroup]="form">
+  <div>
+    <button (click)="bold()" mat-icon-button matTooltip="Bold">
+      <mat-icon>format_bold</mat-icon>
+    </button>
+    <button (click)="italic()" mat-icon-button matTooltip="Italic">
+      <mat-icon>format_italic</mat-icon>
+    </button>
+    <button (click)="underline()" mat-icon-button matTooltip="Underline">
+      <mat-icon>format_underlined</mat-icon>
+    </button>
+    <button (click)="fontSize()" mat-icon-button matTooltip="Font Size">
+      <mat-icon>format_size</mat-icon>
+    </button>
+    <button (click)="link()" mat-icon-button matTooltip="Insert Link">
+      <mat-icon>insert_link</mat-icon>
+    </button>
+    <button (click)="fontFamily()" mat-icon-button matTooltip="Font Family">
+      <mat-icon>text_format</mat-icon>
+    </button>
+    <button (click)="foreColor()" mat-icon-button matTooltip="Font Color">
+      <mat-icon>format_color_fill</mat-icon>
+    </button>
+    <button (click)="borderHorizontal()" mat-icon-button matTooltip="Horizontal line">
+      <mat-icon>border_horizontal</mat-icon>
+    </button>
+    <button (click)="unorderedList()" mat-icon-button matTooltip="Unordered List">
+      <mat-icon>format_list_bulleted</mat-icon>
+    </button>
+    <button (click)="orderedList()" mat-icon-button matTooltip="Ordered List">
+      <mat-icon>format_list_numbered</mat-icon>
+    </button>
+  </div>
+  <mat-form-field appearance="outline" class="editor">
+      <textarea matInput style="display: none">
+      </textarea>
+    <iframe class="frame" #editor id="editor" name="editor"></iframe>
+  </mat-form-field>
+</div>

@@ -3,9 +3,10 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TokenStorageService } from './token-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environment';
+import { SystemMessageService } from '../service/system-message.service';
 
 export const AUTH_TOKEN_HEADER = 'Authorization';
 export const AUTH_TOKEN_PREFIX = 'Bearer';
@@ -18,7 +19,7 @@ export class AuthService {
   private loginUrl = `${environment.apiUrl}/login`;
 
   constructor(private http: HttpClient, private tokenStorageService: TokenStorageService, private jwtHelperService: JwtHelperService,
-              private router: Router) {
+              private router: Router, private systemMessageService: SystemMessageService) {
   }
 
   attemptAuthentication(username: string, password: string): Observable<boolean> {
@@ -28,9 +29,16 @@ export class AuthService {
           const token = response.headers.get(AUTH_TOKEN_HEADER);
           if (token != null) {
             this.tokenStorageService.saveToken(token.replace(AUTH_TOKEN_PREFIX, ''));
+            this.systemMessageService.show('Authenticated');
           }
         }),
-        map((response: HttpResponse<null>) => response.ok)
+        map((response: HttpResponse<null>) => response.ok),
+        catchError((response: HttpResponse<null>) => {
+          if (response.status === 403) {
+            this.systemMessageService.show('Bad Credentials');
+          }
+          return EMPTY;
+        })
       );
   }
 

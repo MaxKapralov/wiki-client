@@ -1,48 +1,14 @@
 <div [formGroup]="newPage">
   <div class="container">
-    <h3>Create New Article</h3>
+    <h3>{{title}}</h3>
     <mat-form-field class="container-item" appearance="outline">
       <mat-label>Title</mat-label>
       <textarea matInput autosize [minRows]="1" formControlName="title"></textarea>
     </mat-form-field>
-    <mat-form-field appearance="outline" class="container-item">
-      <mat-label>Allowed To Read</mat-label>
-      <mat-chip-list #chipList>
-        <mat-chip *ngFor="let user of allowedUsers" [selectable]="true" [removable]="true" (removed)="remove(user)">
-          <mat-chip-avatar></mat-chip-avatar>
-          {{user.fullName}}
-          <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-        <input
-          #userInput
-          [matAutocomplete]="auto"
-          [formControl]="userCtrl"
-          [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          [matChipInputAddOnBlur]="true"
-          (matChipInputTokenEnd)="add($event)">
-      </mat-chip-list>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
-          {{user.fullName}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-card class="container-item" *ngIf="newPage.controls['content'].value && newPage.controls['title'].value">
-      <mat-card-header>
-        <mat-card-title class="page-title">{{newPage.controls['title'].value}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div [innerHtml]="newPage.controls['content'].value | safeHtml"></div>
-      </mat-card-content>
-    </mat-card>
-    <mat-form-field class="container-item" appearance="outline">
-      <mat-label>Content</mat-label>
-      <textarea matInput autosize [minRows]="8" formControlName="content">
-      </textarea>
-    </mat-form-field>
+    <app-allowed-to-read-chip class="container-item" #chipComponent></app-allowed-to-read-chip>
+    <app-editor class="container-item" #editor></app-editor>
     <div>
-      <button mat-raised-button color="primary" (click)="createPage()">Create</button>
+      <button mat-raised-button color="primary" (click)="createPage()" [disabled]="newPage.invalid">{{title}}</button>
       <button mat-raised-button color="warn" (click)="reset()">Reset</button>
     </div>
   </div>

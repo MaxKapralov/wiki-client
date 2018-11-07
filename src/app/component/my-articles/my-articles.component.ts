@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PageService } from '../../service/entity/page.service';
 import { Page } from '../../model/page';
-import { UserService } from '../../service/entity/user.service';
 import { UserStorageService } from '../../auth/user-storage.service';
 import { User } from '../../model/user';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageProxyService } from '../../service/proxy/page-proxy.service';
+import { UserProxyService } from '../../service/proxy/user-proxy.service';
 
 @Component({
   selector: 'app-my-articles',
@@ -14,16 +14,28 @@ import { Router } from '@angular/router';
 export class MyArticlesComponent implements OnInit {
 
   pages: Page[];
-  constructor(private pageService: PageService, private userService: UserService, private userStorageService: UserStorageService,
-              private router: Router) { }
+  userId: number;
+  constructor(private pageProxyService: PageProxyService, private userProxyService: UserProxyService,
+              private userStorageService: UserStorageService,
+              private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.userService.getByUsername(this.userStorageService.getUser()).subscribe((user: User) => {
-      this.pageService.getAll({author: user.id}).subscribe(data => this.pages = data);
+    this.userProxyService.getUser().subscribe((user: User) => {
+      this.userId = user.id;
+      this.loadEntities();
     });
   }
-  navigateToArticle(title: string) {
-    this.router.navigate(['/wiki', title.replace(/\s+/g, '')]);
+  navigateToArticle(path: string, title: string) {
+    this.router.navigate([path, title.replace(/\s+/g, '')]);
   }
-
+  deleteArticle(id: number) {
+    this.pageProxyService.deleteEntity(id).subscribe(() => this.loadEntities());
+  }
+  loadEntities() {
+    if (this.route.snapshot.url[0].path === 'articles') {
+      this.pageProxyService.getAvailable(this.userId).subscribe(data => this.pages = data);
+    } else {
+      this.pageProxyService.getAllForAuthor(this.userId).subscribe(data => this.pages = data);
+    }
+  }
 }

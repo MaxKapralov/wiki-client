@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  grid-template-columns: auto;
+}
+.card {
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}

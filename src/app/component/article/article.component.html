@@ -4,7 +4,7 @@
       <mat-card-title class="page-title">{{article.title}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      {{article.content}}
+      <p [innerHtml]="article.content | safeHtml"></p>
     </mat-card-content>
   </mat-card>
 </div>

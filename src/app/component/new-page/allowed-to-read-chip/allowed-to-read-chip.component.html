@@ -1,0 +1,26 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Allowed To Read</mat-label>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let user of allowedUsers"
+                [selectable]="true"
+                [removable]="true"
+                (removed)="remove(user)">
+        <img matChipAvatar [src]="avatarUrl + '/' + user.username">
+        {{user.fullName}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input matInput formControlName="users"
+             [matAutocomplete]="autocomplete"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeyCodes"
+             [matChipInputAddOnBlur]="false"
+             (matChipInputTokrnEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="select($event)">
+      <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+        {{user.fullName}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

@@ -16,6 +16,11 @@ import { SafeHtml } from './safe-html';
 import { MyArticlesComponent } from './component/my-articles/my-articles.component';
 import { LeftSidenavComponent } from './component/left-sidenav/left-sidenav.component';
 import { ArticleComponent } from './component/article/article.component';
+import { ParameterComponent } from './component/new-page/parameter/parameter.component';
+import { SelectParameterComponent } from './component/new-page/select-parameter/select-parameter.component';
+import { EditorComponent } from './component/new-page/editor/editor.component';
+import { RegistrationComponent } from './component/registration/registration.component';
+import { AllowedToReadChipComponent } from './component/new-page/allowed-to-read-chip/allowed-to-read-chip.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,11 @@ import { ArticleComponent } from './component/article/article.component';
     MyArticlesComponent,
     LeftSidenavComponent,
     ArticleComponent,
+    ParameterComponent,
+    SelectParameterComponent,
+    EditorComponent,
+    RegistrationComponent,
+    AllowedToReadChipComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +61,10 @@ import { ArticleComponent } from './component/article/article.component';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ParameterComponent,
+    SelectParameterComponent
+  ]
 })
 export class AppModule { }

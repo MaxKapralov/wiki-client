@@ -1,12 +1,10 @@
 import { environment } from '../../environment';
 import { Entity } from '../../model/entity';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Resource, Resources } from '../../model/resource';
-import { Observable } from 'rxjs';
-
-export interface SearchParams {
-  [x: string]: string | number | boolean;
-}
+import { Resource } from '../../model/resource';
+import { EMPTY, Observable } from 'rxjs';
+import { SystemMessageService } from '../system-message.service';
+import { catchError } from 'rxjs/operators';
 
 export abstract class EntityService<T extends Entity> {
 
@@ -15,7 +13,7 @@ export abstract class EntityService<T extends Entity> {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  protected constructor(protected http: HttpClient, private rel: string) {
+  protected constructor(protected http: HttpClient, private rel: string, private systemMessageService: SystemMessageService) {
     this.url = `${environment.apiUrl}/${rel}`;
   }
 
@@ -33,26 +31,33 @@ export abstract class EntityService<T extends Entity> {
 
   get(id: number): Observable<Resource<T>> {
     const url = `${this.url}/${id}`;
-    return this.http.get<Resource<T>>(url);
+    return this.http.get<Resource<T>>(url).pipe(catchError(this.errorHandler()));
   }
 
   getAll(params = {}): Observable<T[]> {
     return this.http.get<T[]>(this.url, {
       params: EntityService.httpParams(params)
-    });
+    }).pipe(catchError(this.errorHandler()));
   }
 
   update(entity: T): Observable<Resource<T>> {
-    const url = `${this.url}/${entity.id}`;
-    return this.http.put<Resource<T>>(url, entity, this.httpOptions);
+    const url = `${this.url}`;
+    return this.http.put<Resource<T>>(url, entity, this.httpOptions).pipe(catchError(this.errorHandler()));
   }
 
   add(entity: T): Observable<Resource<T>> {
-    return this.http.post<Resource<T>>(this.url, entity, this.httpOptions);
+    return this.http.post<Resource<T>>(this.url, entity, this.httpOptions).pipe(catchError(this.errorHandler()));
   }
 
   delete(id: number): Observable<Resource<T>> {
     const url = `${this.url}/${id}`;
-    return this.http.delete<Resource<T>>(url);
+    return this.http.delete<Resource<T>>(url).pipe(catchError(this.errorHandler()));
+  }
+
+  protected errorHandler<R>(result?: R) {
+    return (error: any): Observable<any> => {
+      this.systemMessageService.show('Error');
+      return EMPTY;
+    };
   }
 }

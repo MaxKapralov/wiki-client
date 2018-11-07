@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from '../../model/page';
-import { PageService } from '../../service/entity/page.service';
 import { ActivatedRoute } from '@angular/router';
+import { PageProxyService } from '../../service/proxy/page-proxy.service';
 
 @Component({
   selector: 'app-article',
@@ -11,12 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 export class ArticleComponent implements OnInit {
 
   article: Page;
-  constructor(private pageService: PageService, private route: ActivatedRoute) { }
+  constructor(private pageProxy: PageProxyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.pageService.getAll({link: this.route.snapshot.params['link']}).subscribe(data => {
-      this.article = data[0];
-    });
+    this.pageProxy.getPageByLink(this.route.snapshot.params['link']).subscribe(page => this.article = page);
   }
 
 }

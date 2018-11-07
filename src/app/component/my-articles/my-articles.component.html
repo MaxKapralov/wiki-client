@@ -1,10 +1,25 @@
 <div class="container">
   <mat-card *ngFor="let page of pages" class="container-item">
-    <mat-card-title>
-      <mat-card-header class="page-title" (click)="navigateToArticle(page.title)">{{page.title}}</mat-card-header>
+    <mat-card-title class="title">
+      <mat-card-header>
+        <span class="page-title" (click)="navigateToArticle('/wiki', page.title)">
+          {{page.title}}
+        </span>
+      </mat-card-header>
+      <mat-card-header>
+        <span class="actions">
+          <button mat-icon-button matTooltip="Edit" (click)="navigateToArticle('/edit', page.title)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Delete" (click)="deleteArticle(page.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </mat-card-header>
     </mat-card-title>
     <mat-card-content>
-      {{(page.content.length > 100) ? (page.content | slice:0:300) + '...' : page.content}}
+      <p [innerHtml]="((page.content.length > 100) ? (page.content | slice:0:300) + '...' : page.content) | safeHtml">
+      </p>
     </mat-card-content>
   </mat-card>
 </div>

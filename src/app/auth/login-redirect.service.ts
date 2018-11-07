@@ -18,15 +18,5 @@ export class LoginRedirectService implements HttpInterceptor {
     const authReq = req.clone({ setHeaders: { Authorization: `${AUTH_TOKEN_PREFIX}${authToken}` } });
     return next.handle(authReq);
   }
-  /*
-  pipe(
-      tap({
-        error: (err) => {
-          if (err instanceof HttpErrorResponse && [401, 403].includes(err.status)) {
-            this.router.navigate(['login']);
-          }
-        }
-      })
-    )
-   */
+  // todo redirecting after token expiring
 }

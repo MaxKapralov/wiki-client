@@ -16,3 +16,8 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.title {
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
+}

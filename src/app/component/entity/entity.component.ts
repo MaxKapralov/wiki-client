@@ -9,7 +9,11 @@ export abstract class EntityComponent<T extends Entity> {
   }
 
   save(entity: T) {
-    this.entityService.add(entity).subscribe();
+    if (entity.id) {
+      this.update(entity);
+    } else {
+      this.entityService.add(entity).subscribe();
+    }
   }
 
   delete(id: number) {

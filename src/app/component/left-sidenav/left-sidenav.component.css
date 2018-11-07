@@ -9,6 +9,7 @@
 }
 
 .left-buttons {
+  display: grid;
   margin-top: 20%;
 }
 
