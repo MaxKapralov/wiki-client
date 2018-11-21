@@ -73,6 +73,6 @@ export class AuthService {
 
   signOut(): void {
     this.tokenStorageService.deleteToken();
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
   }
 }

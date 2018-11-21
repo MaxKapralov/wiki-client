@@ -26,12 +26,12 @@ export class LoginComponent implements OnInit {
     this.authService.attemptAuthentication(this.loginForm.get('username').value, this.loginForm.get('password').value)
     .subscribe(() => {
       if (this.authService.isAuthenticated()) {
-        this.router.navigate(['new-page']);
+        this.router.navigate(['articles']);
       }
     });
   }
 
   signUp() {
-    this.router.navigate(['/sign-up']);
+    this.router.navigate(['sign-up']);
   }
 }

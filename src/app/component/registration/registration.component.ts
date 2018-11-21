@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordValidator } from '../../password-validator';
 import { NewUser } from '../../model/new-user';
 import { NewUserProxyService } from '../../service/proxy/new-user-proxy.service';
+import { AvatarUploaderProxyService } from '../../service/proxy/avatar-uploader-proxy.service';
 
 @Component({
   selector: 'app-registration',
@@ -12,9 +13,11 @@ import { NewUserProxyService } from '../../service/proxy/new-user-proxy.service'
 export class RegistrationComponent implements OnInit {
 
   registrationForm: FormGroup;
+  selectedFile: File;
   hidePass = true;
   hideConf = true;
-  constructor(private builder: FormBuilder, private newUserProxyService: NewUserProxyService) {
+  constructor(private builder: FormBuilder, private newUserProxyService: NewUserProxyService,
+              private avatarUploader: AvatarUploaderProxyService) {
     this.registrationForm = builder.group({
       name: [null, Validators.required],
       surname: [null, Validators.required],
@@ -27,8 +30,8 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-  reset() {
-    this.registrationForm.reset();
+  onSelectedFileChange(event) {
+    this.selectedFile = event.target.files[0];
   }
   register() {
     const newUser: NewUser = {
@@ -38,6 +41,6 @@ export class RegistrationComponent implements OnInit {
       password: this.registrationForm.controls['password'].value,
     };
     this.newUserProxyService.addEntity(newUser);
-    this.reset();
+    this.avatarUploader.upload(this.selectedFile, this.registrationForm.controls['email'].value);
   }
 }

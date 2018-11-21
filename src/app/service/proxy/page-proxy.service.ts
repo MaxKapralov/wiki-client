@@ -16,12 +16,15 @@ export class PageProxyService extends EntityProxyService<Page> {
   }
 
   getPageByLink(link: string): Observable<Page> {
-    return this.pageService.getAll({link: link}).pipe(map(data => data[0]));
+    return this.pageService.getAll({link: link, lastVersion: true}).pipe(map(data => data[0]));
   }
   getAllForAuthor(id: number): Observable<Page[]> {
-    return this.pageService.getAll({ author: id });
+    return this.pageService.getAll({ author: id, lastVersion: true });
   }
   getAvailable(id: number): Observable<Page[]> {
     return this.pageService.getAvailablePages(id);
+  }
+  getHistory(link: string): Observable<Page[]> {
+    return this.pageService.getAll({link: link, lastVersion: false});
   }
 }

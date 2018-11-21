@@ -6,7 +6,7 @@ export abstract class EntityProxyService<T> {
 
   constructor(private entityService: EntityService<T>, private systemMessageService: SystemMessageService) { }
   deleteEntity(id: number) {
-    return this.entityService.delete(id).pipe(tap(() => this.systemMessageService.show('Deleted')));
+    return this.entityService.delete(id).pipe(tap(() => this.systemMessageService.show('Blocked')));
   }
   addEntity(entity: T) {
     this.entityService.add(entity).subscribe(() => this.systemMessageService.show('Added'));

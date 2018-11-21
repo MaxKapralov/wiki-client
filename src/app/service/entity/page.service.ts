@@ -15,6 +15,11 @@ export class PageService extends EntityService<Page> {
     super(http, 'pages', systemMessageService);
   }
   getAvailablePages(id: number): Observable<Page[]> {
-    return this.http.get<Page[]>(`${this.url}/available`, {params: PageService.httpParams({id: id})}).pipe(catchError(this.errorHandler()));
+    return this.http.get<Page[]>(`${this.url}/available`, {params: PageService.httpParams({id: id})})
+      .pipe(catchError(this.errorHandler()));
+  }
+  getHistory(link: string): Observable<Page[]> {
+    return this.http.get<Page[]>(`${this.url}/history`, {params: PageService.httpParams({link: link})})
+      .pipe(catchError(this.errorHandler()));
   }
 }

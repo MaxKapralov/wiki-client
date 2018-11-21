@@ -11,7 +11,7 @@ import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewPageComponent } from './component/new-page/new-page.component';
-import { LoginRedirectService } from './auth/login-redirect.service';
+import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { SafeHtml } from './safe-html';
 import { MyArticlesComponent } from './component/my-articles/my-articles.component';
 import { LeftSidenavComponent } from './component/left-sidenav/left-sidenav.component';
@@ -21,6 +21,10 @@ import { SelectParameterComponent } from './component/new-page/select-parameter/
 import { EditorComponent } from './component/new-page/editor/editor.component';
 import { RegistrationComponent } from './component/registration/registration.component';
 import { AllowedToReadChipComponent } from './component/new-page/allowed-to-read-chip/allowed-to-read-chip.component';
+import { EditPageComponent } from './component/edit-page/edit-page.component';
+import { ArticleMenuComponent } from './component/my-articles/article-menu/article-menu.component';
+import { PageFromHistoryComponent } from './component/article/page-from-history/page-from-history.component';
+import { LoginRedirectService } from './auth/login-redirect.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,9 @@ import { AllowedToReadChipComponent } from './component/new-page/allowed-to-read
     EditorComponent,
     RegistrationComponent,
     AllowedToReadChipComponent,
+    EditPageComponent,
+    ArticleMenuComponent,
+    PageFromHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +64,11 @@ import { AllowedToReadChipComponent } from './component/new-page/allowed-to-read
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: LoginRedirectService,
       multi: true
     }
@@ -64,7 +76,8 @@ import { AllowedToReadChipComponent } from './component/new-page/allowed-to-read
   bootstrap: [AppComponent],
   entryComponents: [
     ParameterComponent,
-    SelectParameterComponent
+    SelectParameterComponent,
+    PageFromHistoryComponent
   ]
 })
 export class AppModule { }

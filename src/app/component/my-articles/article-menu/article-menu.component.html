@@ -1,0 +1,14 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="navigateToArticle('/edit', page.title)">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
+  </button>
+  <button mat-menu-item (click)="blockArticle(page.id)">
+    <mat-icon>block</mat-icon>
+    <span>Block</span>
+  </button>
+</mat-menu>
+

@@ -38,4 +38,7 @@ export class MyArticlesComponent implements OnInit {
       this.pageProxyService.getAllForAuthor(this.userId).subscribe(data => this.pages = data);
     }
   }
+  checkAccess(page: Page) {
+    return page.author.id === this.userId;
+  }
 }

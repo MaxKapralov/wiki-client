@@ -8,3 +8,17 @@
     </mat-card-content>
   </mat-card>
 </div>
+<mat-card class="right-sidenav">
+  <mat-card-title>
+    <mat-card-title>History</mat-card-title>
+  </mat-card-title>
+  <mat-card-content class="buttons-card">
+  <mat-list>
+    <mat-list-item *ngFor="let item of history">
+      <mat-icon mat-list-icon [matTooltip]="item.author.fullName" (click)="viewPage(item)">description</mat-icon>
+      <h4 mat-line>{{item.title}}</h4>
+      <p mat-line>{{item.timestamp | date: 'dd.MM.yyyy'}}</p>
+    </mat-list-item>
+  </mat-list>
+  </mat-card-content>
+</mat-card>

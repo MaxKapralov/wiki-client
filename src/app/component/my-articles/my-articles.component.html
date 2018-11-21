@@ -7,14 +7,10 @@
         </span>
       </mat-card-header>
       <mat-card-header>
-        <span class="actions">
-          <button mat-icon-button matTooltip="Edit" (click)="navigateToArticle('/edit', page.title)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="Delete" (click)="deleteArticle(page.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </span>
+        <mat-card-subtitle class="subtitle">
+          {{page.author.fullName + " " + (page.timestamp | date: 'dd.MM.yyyy')}}
+          <app-article-menu [page]="page" (deleteEmitted)="deleteArticle($event)" *ngIf="checkAccess(page)"></app-article-menu>
+        </mat-card-subtitle>
       </mat-card-header>
     </mat-card-title>
     <mat-card-content>
