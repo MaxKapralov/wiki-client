@@ -8,8 +8,8 @@
     <app-allowed-to-read-chip class="container-item" #chipComponent></app-allowed-to-read-chip>
     <app-editor class="container-item" #editor></app-editor>
     <div>
-      <button mat-stroked-button color="primary" (click)="createPage()" [disabled]="newPage.invalid">{{title}}</button>
-      <button mat-stroked-button color="warn" (click)="reset()">Reset</button>
+      <button mat-raised-button color="primary" (click)="createPage()" [disabled]="newPage.invalid">{{title}}</button>
+      <button mat-raised-button color="warn" (click)="reset()">Reset</button>
     </div>
   </div>
 </div>

@@ -36,7 +36,7 @@
   </mat-card-content>
   <mat-card-actions align="center">
     <input style="display: none" type="file" (change)="onSelectedFileChange($event)" #fileInput accept="image/*">
-    <button mat-stroked-button (click)="fileInput.click()">Select Avatar</button>
-    <button mat-stroked-button color="primary" (click)="register()" [disabled]="registrationForm.invalid">Sign up</button>
+    <button mat-raised-button (click)="fileInput.click()">Select Avatar</button>
+    <button mat-raised-button color="primary" (click)="register()" [disabled]="registrationForm.invalid">Sign up</button>
   </mat-card-actions>
 </mat-card>
