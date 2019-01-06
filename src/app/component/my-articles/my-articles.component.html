@@ -1,3 +1,9 @@
+<div class="search-bar" [formGroup]="searchForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput formControlName="searchTerm">
+  </mat-form-field>
+</div>
 <div class="container">
   <mat-card *ngFor="let page of pages" class="container-item">
     <mat-card-title class="title">
@@ -18,4 +24,5 @@
       </p>
     </mat-card-content>
   </mat-card>
+  <mat-paginator [length]="20" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
 </div>

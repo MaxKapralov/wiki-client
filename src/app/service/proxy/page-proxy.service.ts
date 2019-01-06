@@ -27,4 +27,7 @@ export class PageProxyService extends EntityProxyService<Page> {
   getHistory(link: string): Observable<Page[]> {
     return this.pageService.getAll({link: link, lastVersion: false});
   }
+  search(searchTerm: string): Observable<Page[]> {
+    return this.pageService.search(searchTerm);
+  }
 }

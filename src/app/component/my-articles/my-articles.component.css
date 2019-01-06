@@ -6,7 +6,13 @@
   grid-template-columns: auto auto;
   grid-column-gap: 5%;
 }
-
+.search-bar {
+  margin-left: 18%;
+  margin-right: 5%;
+}
+.search-bar mat-form-field {
+  width: 100%;
+}
 .container-item {
   grid-column-start: 1;
   grid-column-end: 3;

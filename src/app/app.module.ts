@@ -8,7 +8,7 @@ import { LoginComponent } from './component/login/login.component';
 import { environment } from './environment';
 import { TokenStorageService } from './auth/token-storage.service';
 import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewPageComponent } from './component/new-page/new-page.component';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
@@ -60,6 +60,7 @@ import { LoginRedirectService } from './auth/login-redirect.service';
     }),
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule
       ],
   providers: [
     {

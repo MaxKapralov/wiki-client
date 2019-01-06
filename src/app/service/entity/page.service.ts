@@ -22,4 +22,8 @@ export class PageService extends EntityService<Page> {
     return this.http.get<Page[]>(`${this.url}/history`, {params: PageService.httpParams({link: link})})
       .pipe(catchError(this.errorHandler()));
   }
+  search(searchTerm: string): Observable<Page[]> {
+    return this.http.get<Page[]>(`${this.url}/search`, {params: PageService.httpParams({searchTerm: searchTerm})})
+      .pipe(catchError(this.errorHandler()));
+  }
 }

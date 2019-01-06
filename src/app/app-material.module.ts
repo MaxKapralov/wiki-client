@@ -6,7 +6,7 @@ import {
   MatCardModule,
   MatChipsModule, MatDialogModule,
   MatIconModule,
-  MatInputModule, MatLineModule, MatListModule, MatMenuModule,
+  MatInputModule, MatLineModule, MatListModule, MatMenuModule, MatPaginatorModule,
   MatSelectModule, MatSnackBarModule, MatTooltipModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,7 +30,8 @@ import {AutosizeModule} from 'ngx-autosize';
     MatSnackBarModule,
     MatMenuModule,
     MatListModule,
-    MatLineModule
+    MatLineModule,
+    MatPaginatorModule
   ],
   exports: [
     MatInputModule,
@@ -47,7 +48,8 @@ import {AutosizeModule} from 'ngx-autosize';
     MatSelectModule,
     MatMenuModule,
     MatListModule,
-    MatLineModule
+    MatLineModule,
+    MatPaginatorModule
   ]
 })
 export class AppMaterialModule { }
