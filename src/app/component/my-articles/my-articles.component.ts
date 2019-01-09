@@ -14,12 +14,11 @@ import { tap } from 'rxjs/operators';
   templateUrl: './my-articles.component.html',
   styleUrls: ['./my-articles.component.css']
 })
-export class MyArticlesComponent implements OnInit, AfterViewInit {
+export class MyArticlesComponent implements OnInit {
 
   pages: Page[];
   searchForm: FormGroup;
   userId: number;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private pageProxyService: PageProxyService, private userProxyService: UserProxyService,
               private userStorageService: UserStorageService,
@@ -35,11 +34,6 @@ export class MyArticlesComponent implements OnInit, AfterViewInit {
       this.userId = user.id;
       this.loadEntities();
     });
-  }
-  ngAfterViewInit() {
-    this.paginator.page.pipe(
-      tap(() => console.log('Page'))
-    ).subscribe();
   }
 
   navigateToArticle(path: string, title: string) {
